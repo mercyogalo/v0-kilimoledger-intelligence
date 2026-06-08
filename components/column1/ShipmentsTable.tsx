@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import type { Shipment } from '@/lib/types';
 import { AlertCircle, CheckCircle2, Lock, Truck } from 'lucide-react';
 
@@ -39,6 +40,13 @@ const statusConfig = {
 };
 
 export function ShipmentsTable({ shipments }: ShipmentsTableProps) {
+  const [timestamp, setTimestamp] = useState<string>('');
+
+  useEffect(() => {
+    const now = new Date();
+    setTimestamp(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+  }, []);
+
   return (
     <div className="card-premium overflow-hidden">
       <div className="p-4 border-b border-border bg-slate/30">
@@ -88,7 +96,7 @@ export function ShipmentsTable({ shipments }: ShipmentsTableProps) {
       </div>
 
       <div className="px-4 py-3 bg-slate/10 border-t border-border/30 text-xs text-muted-foreground">
-        <p>Last updated: {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
+        <p>Last updated: {timestamp || '—'}</p>
       </div>
     </div>
   );

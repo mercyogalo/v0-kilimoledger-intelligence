@@ -1,9 +1,27 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { MOCK_MILESTONES } from '@/lib/constants';
 import { CheckCircle2, Lock, Zap } from 'lucide-react';
 
 export function MilestoneTimeline() {
+  const [formattedDates, setFormattedDates] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const dates: Record<string, string> = {};
+    MOCK_MILESTONES.forEach((milestone) => {
+      if (milestone.date) {
+        dates[milestone.id] = milestone.date.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      }
+    });
+    setFormattedDates(dates);
+  }, []);
+
   return (
     <div className="card-premium p-4">
       <h3 className="text-sm font-semibold text-foreground mb-4">Escrow Milestone Timeline</h3>
@@ -57,14 +75,9 @@ export function MilestoneTimeline() {
                     {milestone.amount}
                   </p>
                 )}
-                {milestone.date && (
+                {milestone.date && formattedDates[milestone.id] && (
                   <p className="text-xs text-muted-foreground/70 mt-1">
-                    {milestone.date.toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                    {formattedDates[milestone.id]}
                   </p>
                 )}
               </div>
