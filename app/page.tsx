@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { BarChart3, Users, Truck } from 'lucide-react';
+import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 
 export default function Page() {
   return (
@@ -68,6 +69,9 @@ export default function Page() {
             </div>
           </Link>
         </div>
+
+        {/* How It Works Section */}
+        <HowItWorksSection />
       </div>
 
       {/* Footer */}

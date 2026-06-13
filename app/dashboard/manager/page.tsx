@@ -1,7 +1,10 @@
 'use client';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, Download } from 'lucide-react';
+import { BreachAlertBanner } from '@/components/manager/BreachAlertBanner';
+import { AICyclingFeed } from '@/components/manager/AICyclingFeed';
+import { breachAlerts } from '@/lib/data';
 
 export default function ManagerDashboard() {
   // KPI Data
@@ -81,8 +84,15 @@ export default function ManagerDashboard() {
     return milestones;
   };
 
+  // Check for breach alert
+  const hasBreach = shipments.some((s) => s.status === 'Breach Warning');
+  const breachShipment = shipments.find((s) => s.status === 'Breach Warning');
+
   return (
     <DashboardLayout role="manager">
+      {hasBreach && breachShipment && (
+        <BreachAlertBanner alert={{ id: breachShipment.id, asset: breachShipment.asset, temperature: breachShipment.coldChain }} />
+      )}
       <div className="space-y-8">
         {/* Section A: KPI Row */}
         <section>
@@ -119,7 +129,12 @@ export default function ManagerDashboard() {
               </thead>
               <tbody>
                 {shipments.map((shipment) => (
-                  <tr key={shipment.id} className="border-b border-border/50 hover:bg-primary/5 transition-colors">
+                  <tr 
+                    key={shipment.id} 
+                    className={`border-b border-border/50 hover:bg-primary/5 transition-colors ${
+                      shipment.status === 'Breach Warning' ? 'border-l-4 border-l-destructive bg-destructive/5 animate-pulse-subtle' : ''
+                    }`}
+                  >
                     <td className="py-3 px-4 font-mono text-xs">{shipment.contractId}</td>
                     <td className="py-3 px-4">{shipment.asset}</td>
                     <td className="py-3 px-4">{shipment.origin}</td>
@@ -168,29 +183,7 @@ export default function ManagerDashboard() {
         </section>
 
         {/* Section D: AI Intelligence Feed */}
-        <section>
-          <h2 className="text-xl font-semibold mb-4">AI Cold-Chain Analyst</h2>
-          <div className="terminal data-card font-mono text-xs space-y-1 max-h-48 overflow-y-auto">
-            <div className="text-green-400">
-              <span className="text-muted-foreground">[2026-01-10 09:23:47]</span> ANALYSIS_INIT: Cold-chain integrity assessment
-            </div>
-            <div className="text-green-400">
-              <span className="text-muted-foreground">[2026-01-10 09:23:48]</span> TEMP_CHECK: Arabica Coffee at 4.2°C - NORMAL
-            </div>
-            <div className="text-green-400">
-              <span className="text-muted-foreground">[2026-01-10 09:23:49]</span> HUMIDITY_CHECK: Green Tea at 65% - OPTIMAL
-            </div>
-            <div className="text-yellow-400">
-              <span className="text-muted-foreground">[2026-01-10 09:23:50]</span> WARNING: Cocoa shipment approaching breach threshold (8.3°C)
-            </div>
-            <div className="text-green-400">
-              <span className="text-muted-foreground">[2026-01-10 09:23:51]</span> RECOMMENDATION: Increase refrigeration for SHP-004
-            </div>
-            <div className="text-green-400">
-              <span className="text-muted-foreground">[2026-01-10 09:23:52]</span> ANALYSIS_COMPLETE: 4/5 shipments within spec
-            </div>
-          </div>
-        </section>
+        <AICyclingFeed />
       </div>
     </DashboardLayout>
   );

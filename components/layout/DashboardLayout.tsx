@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Package, Shield, Lock, Settings } from 'lucide-react';
+import { NotificationBell } from '@/components/manager/NotificationBell';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -59,8 +60,11 @@ export function DashboardLayout({ children, role = 'manager' }: DashboardLayoutP
         {/* Top Bar */}
         <div className="border-b border-border px-8 py-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold">Dashboard</h2>
-          <div className="text-sm text-muted-foreground">
-            {new Date().toLocaleDateString()}
+          <div className="flex items-center gap-6">
+            {role === 'manager' && <NotificationBell />}
+            <div className="text-sm text-muted-foreground">
+              {new Date().toLocaleDateString()}
+            </div>
           </div>
         </div>
 
