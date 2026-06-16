@@ -22,13 +22,13 @@ export function DashboardLayout({ children, role = 'manager' }: DashboardLayoutP
   ];
 
   return (
-    <div className="flex h-screen bg-background text-foreground">
+    <div className="flex h-screen bg-white text-gray-900">
       {/* Sidebar */}
-      <div className="w-64 border-r border-border flex flex-col">
+      <div className="w-64 border-r border-gray-200 flex flex-col bg-white">
         {/* Logo */}
-        <div className="p-6 border-b border-border">
+        <div className="p-6 border-b border-gray-200">
           <Link href="/">
-            <h1 className="text-lg font-bold text-primary">KilimoLedger</h1>
+            <h1 className="text-lg font-bold text-green-700">KilimoLedger</h1>
           </Link>
         </div>
 
@@ -43,8 +43,8 @@ export function DashboardLayout({ children, role = 'manager' }: DashboardLayoutP
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-2 rounded-sm text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-card'
+                    ? 'bg-green-100 text-green-700'
+                    : 'text-green-600 hover:text-green-700 hover:bg-green-50'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -58,18 +58,18 @@ export function DashboardLayout({ children, role = 'manager' }: DashboardLayoutP
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <div className="border-b border-border px-8 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Dashboard</h2>
+        <div className="border-b border-gray-200 bg-white px-8 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-green-700">Dashboard</h2>
           <div className="flex items-center gap-6">
             {role === 'manager' && <NotificationBell />}
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-gray-400">
               {new Date().toLocaleDateString()}
             </div>
           </div>
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-auto p-8">
+        <div className="flex-1 overflow-auto p-8 bg-white">
           {children}
         </div>
       </div>

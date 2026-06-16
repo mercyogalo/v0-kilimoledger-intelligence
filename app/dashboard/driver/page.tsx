@@ -23,180 +23,175 @@ export default function DriverPortal() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
-      {/* Mobile Phone Simulator */}
-      <div className="w-full max-w-sm border-8 border-slate rounded-3xl bg-black aspect-video flex flex-col shadow-2xl overflow-hidden">
-        {/* Phone Content */}
-        <div className="flex-1 flex flex-col bg-background overflow-hidden">
-          {/* Status Bar */}
-          <div className="bg-card border-b border-border px-4 py-2 flex items-center justify-between text-xs">
-            <span className="text-muted-foreground">9:41</span>
-            <span className="text-primary font-medium">Driver Portal</span>
-            <span className="text-muted-foreground">100%</span>
+    <div className="min-h-screen bg-white text-gray-900 flex flex-col">
+      {/* Status Bar */}
+      <div className="bg-green-700 px-6 py-3 flex items-center justify-between text-sm">
+        <span className="text-green-200">9:41</span>
+        <span className="text-white font-semibold tracking-wide">Driver Portal</span>
+        <span className="text-green-200">100%</span>
+      </div>
+
+      {/* Content Area */}
+      <div className="flex-1 px-6 py-8 max-w-4xl mx-auto w-full">
+        {/* Tab: Checkpoint */}
+        {activeTab === 'checkpoint' && (
+          <div className="space-y-6">
+            <div>
+              <p className="text-sm text-gray-400 mb-1">Active Checkpoint</p>
+              <h2 className="text-2xl font-bold text-green-700">Mtito Andei Weighbridge</h2>
+            </div>
+            <div className="border border-gray-200 rounded-md p-5 bg-white shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-green-500 rounded-full" />
+                  <span className="text-sm font-medium text-green-700">Vehicle Active</span>
+                </div>
+                <span className="text-xs text-gray-400">Just now</span>
+              </div>
+            </div>
+            <div className="border border-gray-200 rounded-md p-5 bg-white shadow-sm">
+              <p className="text-xs text-gray-400 mb-2">Last Update</p>
+              <p className="text-sm font-mono text-green-700">{new Date().toLocaleString()}</p>
+            </div>
           </div>
+        )}
 
-          {/* Content Area */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">
-            {/* Tab: Checkpoint */}
-            {activeTab === 'checkpoint' && (
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Active Checkpoint</p>
-                  <h2 className="text-lg font-bold">Mtito Andei Weighbridge</h2>
-                </div>
-                <div className="data-card">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-primary rounded-full" />
-                      <span className="text-sm font-medium">Vehicle Active</span>
-                    </div>
-                    <span className="text-xs text-muted-foreground">Just now</span>
-                  </div>
-                </div>
-                <div className="data-card">
-                  <p className="text-xs text-muted-foreground mb-2">Last Update</p>
-                  <p className="text-sm font-mono">{new Date().toLocaleString()}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Tab: Documents */}
-            {activeTab === 'documents' && (
-              <div className="space-y-3">
-                <h2 className="text-lg font-bold mb-4">Documents</h2>
-                {documents.map((doc) => (
-                  <div key={doc.id} className="data-card">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-start gap-2 flex-1">
-                        <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <div className="flex-1">
-                          <p className="text-sm font-medium">{doc.name}</p>
-                          <span
-                            className={`text-xs inline-block mt-1 px-2 py-0.5 rounded-sm ${
-                              doc.status === 'Approved'
-                                ? 'bg-primary/20 text-primary'
-                                : doc.status === 'Pending'
-                                  ? 'bg-secondary/20 text-secondary'
-                                  : 'bg-destructive/20 text-destructive'
-                            }`}
-                          >
-                            {doc.status}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <button className="flex-1 py-2 bg-primary text-primary-foreground text-xs font-medium rounded-sm hover:bg-primary/90">
-                        Approve
-                      </button>
-                      <button className="flex-1 py-2 bg-destructive text-destructive foreground text-xs font-medium rounded-sm hover:bg-destructive/90">
-                        Reject
-                      </button>
+        {/* Tab: Documents */}
+        {activeTab === 'documents' && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-green-700 mb-6">Documents</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {documents.map((doc) => (
+                <div key={doc.id} className="border border-gray-200 rounded-md p-5 bg-white shadow-sm">
+                  <div className="flex items-start gap-3 mb-4">
+                    <FileText className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-800">{doc.name}</p>
+                      <span
+                        className={`text-xs inline-block mt-1 px-2 py-0.5 rounded-sm ${
+                          doc.status === 'Approved'
+                            ? 'bg-green-100 text-green-700'
+                            : doc.status === 'Pending'
+                              ? 'bg-yellow-100 text-yellow-700'
+                              : 'bg-red-100 text-red-600'
+                        }`}
+                      >
+                        {doc.status}
+                      </span>
                     </div>
                   </div>
-                ))}
-                <div className="data-card mt-4">
-                  <label className="block text-xs text-muted-foreground mb-2">Rejection Reason</label>
-                  <textarea
-                    value={rejectionReason}
-                    onChange={(e) => setRejectionReason(e.target.value)}
-                    placeholder="Optional notes..."
-                    className="w-full bg-card border border-border rounded-sm p-2 text-xs text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
-                    rows={3}
-                  />
-                  <button className="w-full mt-3 py-2 bg-destructive text-destructive-foreground text-xs font-medium rounded-sm hover:bg-destructive/90">
-                    Flag Rejection
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Tab: SOS */}
-            {activeTab === 'sos' && (
-              <div className="space-y-4 flex flex-col items-center justify-center h-full py-8">
-                {!showSOSConfirm ? (
-                  <>
-                    <button
-                      onClick={() => setShowSOSConfirm(true)}
-                      className="w-full py-4 bg-destructive text-destructive-foreground rounded-sm font-bold text-lg hover:bg-destructive/90 transition-colors"
-                    >
-                      REPORT INCIDENT
+                  <div className="flex gap-2">
+                    <button className="flex-1 py-2 bg-green-700 text-white text-xs font-medium rounded-sm hover:bg-green-600 transition-colors">
+                      Approve
                     </button>
-                    <div className="grid grid-cols-2 gap-3 w-full mt-6">
-                      {incidents.map((incident) => (
-                        <button
-                          key={incident}
-                          onClick={() => {
-                            setSelectedIncident(incident);
-                            setShowSOSConfirm(true);
-                          }}
-                          className="py-3 px-2 bg-card border border-border rounded-sm text-xs font-medium hover:border-primary hover:text-primary transition-colors"
-                        >
-                          {incident}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <div className="data-card text-center space-y-3 w-full">
-                    <AlertTriangle className="w-8 h-8 text-destructive mx-auto" />
-                    <h3 className="font-bold text-lg">SOS Sent</h3>
-                    <p className="text-sm text-muted-foreground">Control has been notified of your incident</p>
-                    {selectedIncident && (
-                      <p className="text-xs text-primary font-mono">{selectedIncident}</p>
-                    )}
+                    <button className="flex-1 py-2 bg-red-500 text-white text-xs font-medium rounded-sm hover:bg-red-600 transition-colors">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="border border-gray-200 rounded-md p-5 bg-white shadow-sm mt-6 max-w-lg">
+              <label className="block text-xs text-gray-400 mb-2">Rejection Reason</label>
+              <textarea
+                value={rejectionReason}
+                onChange={(e) => setRejectionReason(e.target.value)}
+                placeholder="Optional notes..."
+                className="w-full bg-white border border-gray-200 rounded-sm p-2 text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
+                rows={3}
+              />
+              <button className="w-full mt-3 py-2 bg-red-500 text-white text-sm font-medium rounded-sm hover:bg-red-600 transition-colors">
+                Flag Rejection
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Tab: SOS */}
+        {activeTab === 'sos' && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-green-700 mb-6">Incident Report</h2>
+            {!showSOSConfirm ? (
+              <>
+                <button
+                  onClick={() => setShowSOSConfirm(true)}
+                  className="w-full max-w-sm py-5 bg-red-500 text-white rounded-md font-bold text-xl hover:bg-red-600 transition-colors"
+                >
+                  REPORT INCIDENT
+                </button>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                  {incidents.map((incident) => (
                     <button
+                      key={incident}
                       onClick={() => {
-                        setShowSOSConfirm(false);
-                        setSelectedIncident(null);
+                        setSelectedIncident(incident);
+                        setShowSOSConfirm(true);
                       }}
-                      className="w-full py-2 bg-primary text-primary-foreground text-xs font-medium rounded-sm hover:bg-primary/90 mt-4"
+                      className="py-4 px-4 border border-gray-200 rounded-md text-sm font-medium text-green-700 hover:border-green-500 hover:bg-green-50 transition-colors"
                     >
-                      Dismiss
+                      {incident}
                     </button>
-                  </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="border border-gray-200 rounded-md p-8 bg-white shadow-sm text-center space-y-4 max-w-md">
+                <AlertTriangle className="w-10 h-10 text-red-500 mx-auto" />
+                <h3 className="font-bold text-xl text-green-700">SOS Sent</h3>
+                <p className="text-sm text-gray-400">Control has been notified of your incident</p>
+                {selectedIncident && (
+                  <p className="text-sm text-green-600 font-mono">{selectedIncident}</p>
                 )}
+                <button
+                  onClick={() => {
+                    setShowSOSConfirm(false);
+                    setSelectedIncident(null);
+                  }}
+                  className="w-full py-2 bg-green-700 text-white text-sm font-medium rounded-sm hover:bg-green-600 transition-colors mt-4"
+                >
+                  Dismiss
+                </button>
               </div>
             )}
           </div>
+        )}
+      </div>
 
-          {/* Bottom Tab Bar */}
-          <div className="border-t border-border bg-card flex">
-            <button
-              onClick={() => setActiveTab('checkpoint')}
-              className={`flex-1 py-3 text-xs font-medium border-t-2 transition-colors ${
-                activeTab === 'checkpoint'
-                  ? 'text-primary border-primary'
-                  : 'text-muted-foreground border-transparent hover:text-foreground'
-              }`}
-            >
-              <MapPin className="w-4 h-4 mx-auto mb-1" />
-              Checkpoint
-            </button>
-            <button
-              onClick={() => setActiveTab('documents')}
-              className={`flex-1 py-3 text-xs font-medium border-t-2 transition-colors ${
-                activeTab === 'documents'
-                  ? 'text-primary border-primary'
-                  : 'text-muted-foreground border-transparent hover:text-foreground'
-              }`}
-            >
-              <FileText className="w-4 h-4 mx-auto mb-1" />
-              Documents
-            </button>
-            <button
-              onClick={() => setActiveTab('sos')}
-              className={`flex-1 py-3 text-xs font-medium border-t-2 transition-colors ${
-                activeTab === 'sos'
-                  ? 'text-destructive border-destructive'
-                  : 'text-muted-foreground border-transparent hover:text-foreground'
-              }`}
-            >
-              <AlertTriangle className="w-4 h-4 mx-auto mb-1" />
-              SOS
-            </button>
-          </div>
-        </div>
+      {/* Bottom Tab Bar */}
+      <div className="border-t border-gray-200 bg-white flex sticky bottom-0">
+        <button
+          onClick={() => setActiveTab('checkpoint')}
+          className={`flex-1 py-4 text-sm font-medium border-t-2 transition-colors ${
+            activeTab === 'checkpoint'
+              ? 'text-green-700 border-green-700'
+              : 'text-gray-400 border-transparent hover:text-green-600'
+          }`}
+        >
+          <MapPin className="w-5 h-5 mx-auto mb-1" />
+          Checkpoint
+        </button>
+        <button
+          onClick={() => setActiveTab('documents')}
+          className={`flex-1 py-4 text-sm font-medium border-t-2 transition-colors ${
+            activeTab === 'documents'
+              ? 'text-green-700 border-green-700'
+              : 'text-gray-400 border-transparent hover:text-green-600'
+          }`}
+        >
+          <FileText className="w-5 h-5 mx-auto mb-1" />
+          Documents
+        </button>
+        <button
+          onClick={() => setActiveTab('sos')}
+          className={`flex-1 py-4 text-sm font-medium border-t-2 transition-colors ${
+            activeTab === 'sos'
+              ? 'text-red-500 border-red-500'
+              : 'text-gray-400 border-transparent hover:text-red-400'
+          }`}
+        >
+          <AlertTriangle className="w-5 h-5 mx-auto mb-1" />
+          SOS
+        </button>
       </div>
     </div>
   );
